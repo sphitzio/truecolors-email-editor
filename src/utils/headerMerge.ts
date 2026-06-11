@@ -31,6 +31,38 @@ export function mergeBrandHeader(rawHtml: string, brand: BrandState): string {
   return rawHtml;
 }
 
+function band(html: string): string {
+  // Wrap custom header/footer content in a centered, email-safe container.
+  return `
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="padding:16px 0;">
+    <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;">
+      <tr><td style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.6;color:#51545e;text-align:center;">
+        ${html}
+      </td></tr>
+    </table>
+  </td></tr></table>`;
+}
+
+/**
+ * Inject optional custom Header (just after <body>) and Footer (just before
+ * </body>) banners. Empty strings inject nothing. Kept separate from the brand
+ * logo header (mergeBrandHeader), which only swaps the logo image.
+ */
+export function injectHeaderFooter(
+  rawHtml: string,
+  headerHtml: string,
+  footerHtml: string,
+): string {
+  let out = rawHtml;
+  if (headerHtml.trim()) {
+    out = out.replace(/(<body[^>]*>)/i, (_m, open) => `${open}\n${band(headerHtml)}`);
+  }
+  if (footerHtml.trim()) {
+    out = out.replace(/(<\/body>)/i, `${band(footerHtml)}\n$1`);
+  }
+  return out;
+}
+
 /**
  * Snippet inserted by the "Insert image" control at the cursor in the raw editor.
  */

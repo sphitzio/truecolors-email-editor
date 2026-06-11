@@ -20,8 +20,33 @@ engine.registerFilter('money_with_currency', (v) => (v == null ? '' : String(v))
 engine.registerFilter('money_without_currency', (v) => (v == null ? '' : String(v)));
 engine.registerFilter('payment_terms', (v) => v);
 engine.registerFilter('t', (v) => v); // translation key passthrough
-engine.registerFilter('image_tag', (v) => (v ? `<img src="${v}">` : ''));
-engine.registerFilter('img_url', (v) => v);
+
+// Product line images: templates do `{{ line | img_url: 'size' }}`. `line` is
+// an object, so pull a usable URL from it (mock items carry .image/.image_url),
+// falling back to a generic placeholder so the preview never shows a broken img.
+const PRODUCT_PLACEHOLDER =
+  'https://cdn.shopify.com/s/files/1/0819/7518/1554/files/mail1_430x.png?v=1781052228';
+const pickImage = (v: unknown): string => {
+  if (typeof v === 'string') return v;
+  if (v && typeof v === 'object') {
+    const o = v as Record<string, unknown>;
+    const found = o.image_url || o.image || o.src || (o.product as Record<string, unknown>)?.image;
+    if (typeof found === 'string') return found;
+  }
+  return PRODUCT_PLACEHOLDER;
+};
+engine.registerFilter('img_url', pickImage);
+engine.registerFilter('image_url', pickImage);
+engine.registerFilter('image_tag', (v) => `<img src="${pickImage(v)}">`);
+
+// Shopify asset-URL filters reference hosted assets we don't have. Return a
+// transparent 1px so spacers/no-image icons don't render as broken images.
+const BLANK = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+engine.registerFilter('shopify_asset_url', () => BLANK);
+engine.registerFilter('cdn_asset_url', () => BLANK);
+engine.registerFilter('asset_url', () => BLANK);
+engine.registerFilter('global_asset_url', () => BLANK);
+
 engine.registerFilter('weight_with_unit', (v) => (v == null ? '' : String(v)));
 engine.registerFilter('date', (v) => (v == null ? '' : String(v)));
 

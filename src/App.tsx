@@ -3,7 +3,7 @@ import { TemplateMeta, BrandState } from './types';
 import PreviewFrame from './components/PreviewFrame';
 import VariableGuide from './components/VariableGuide';
 import { renderTemplatePreview } from './utils/liquidPreview';
-import { mergeBrandHeader, imageSnippet } from './utils/headerMerge';
+import { mergeBrandHeader, injectHeaderFooter, imageSnippet } from './utils/headerMerge';
 import {
   Settings,
   ImagePlus,
@@ -14,6 +14,8 @@ import {
   Search,
   Mail,
   Info,
+  PanelTop,
+  PanelBottom,
 } from 'lucide-react';
 
 const BASE = import.meta.env.BASE_URL || '/';
@@ -36,11 +38,22 @@ export default function App() {
   const [brand, setBrand] = useState<BrandState>(DEFAULT_BRAND);
   const [editedHtml, setEditedHtml] = useState('');
 
+  // Optional custom header / footer banners injected into every template.
+  const [headerHtml, setHeaderHtml] = useState('');
+  const [footerHtml, setFooterHtml] = useState('');
+
   const [previewHtml, setPreviewHtml] = useState('');
   const [viewMode, setViewMode] = useState<'preview' | 'code'>('preview');
   const [imageUrl, setImageUrl] = useState('');
 
   const editorRef = useRef<HTMLTextAreaElement>(null);
+
+  // Build the editable HTML from the original: brand logo + header/footer bands.
+  const buildEdited = useCallback(
+    (html: string) =>
+      injectHeaderFooter(mergeBrandHeader(html, brand), headerHtml, footerHtml),
+    [brand, headerHtml, footerHtml],
+  );
 
   // Load the template index once.
   useEffect(() => {
@@ -62,7 +75,7 @@ export default function App() {
       .then((r) => r.text())
       .then((html) => {
         setOriginalHtml(html);
-        setEditedHtml(mergeBrandHeader(html, brand));
+        setEditedHtml(buildEdited(html));
       })
       .catch(() => {
         setOriginalHtml('');
@@ -71,11 +84,11 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeId, templates]);
 
-  // Re-apply the brand header to the ORIGINAL whenever brand fields change.
+  // Rebuild from the ORIGINAL whenever brand / header / footer fields change.
   useEffect(() => {
-    if (originalHtml) setEditedHtml(mergeBrandHeader(originalHtml, brand));
+    if (originalHtml) setEditedHtml(buildEdited(originalHtml));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [brand]);
+  }, [brand, headerHtml, footerHtml]);
 
   // Render the edited template through liquidjs for the preview (debounced).
   useEffect(() => {
@@ -117,7 +130,7 @@ export default function App() {
   };
 
   const handleReset = () => {
-    if (originalHtml) setEditedHtml(mergeBrandHeader(originalHtml, brand));
+    if (originalHtml) setEditedHtml(buildEdited(originalHtml));
   };
 
   const card = isDark
@@ -271,6 +284,44 @@ export default function App() {
                     className={inputClass}
                   />
                 </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Custom header / footer banners */}
+          <div className={`border rounded-2xl p-5 ${card}`}>
+            <div className="flex items-center gap-2 mb-3">
+              <PanelTop className="w-4 h-4 text-sky-400" />
+              <h3 className={`font-bold text-sm ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>Header & Footer</h3>
+            </div>
+            <div className="space-y-3">
+              <div>
+                <label className={`${labelClass} flex items-center gap-1.5`}>
+                  <PanelTop className="w-3 h-3" /> Custom Header (HTML, injected at top)
+                </label>
+                <textarea
+                  value={headerHtml}
+                  onChange={(e) => setHeaderHtml(e.target.value)}
+                  spellCheck={false}
+                  placeholder="e.g. <strong>Free shipping over Dhs. 200</strong>"
+                  className={`w-full h-20 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500 font-mono text-[11px] border ${
+                    isDark ? 'text-slate-100 bg-slate-950 border-slate-800' : 'text-slate-800 bg-white border-slate-200'
+                  }`}
+                />
+              </div>
+              <div>
+                <label className={`${labelClass} flex items-center gap-1.5`}>
+                  <PanelBottom className="w-3 h-3" /> Custom Footer (HTML, injected at bottom)
+                </label>
+                <textarea
+                  value={footerHtml}
+                  onChange={(e) => setFooterHtml(e.target.value)}
+                  spellCheck={false}
+                  placeholder="e.g. TrueColors · Dubai, UAE · <a href='{{ shop.url }}'>Visit store</a>"
+                  className={`w-full h-20 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500 font-mono text-[11px] border ${
+                    isDark ? 'text-slate-100 bg-slate-950 border-slate-800' : 'text-slate-800 bg-white border-slate-200'
+                  }`}
+                />
               </div>
             </div>
           </div>
