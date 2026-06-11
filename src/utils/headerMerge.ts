@@ -36,7 +36,7 @@ function band(html: string): string {
   return `
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="padding:16px 0;">
     <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;">
-      <tr><td style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.6;color:#51545e;text-align:center;">
+      <tr><td style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.6;color:#51545e;text-align:center;padding:0 24px;">
         ${html}
       </td></tr>
     </table>
@@ -55,7 +55,18 @@ export function injectHeaderFooter(
 ): string {
   let out = rawHtml;
   if (headerHtml.trim()) {
-    out = out.replace(/(<body[^>]*>)/i, (_m, open) => `${open}\n${band(headerHtml)}`);
+    // Place the custom header band right after the logo cell (shop-name__cell /
+    // giftcard logo img), so it sits directly under the brand logo. Fall back to
+    // top-of-body if neither anchor is present.
+    const cellRe = /(<td[^>]*class=["'][^"']*shop-name__cell[^"']*["'][^>]*>[\s\S]*?<\/td>)/i;
+    const imgRe = /(<img\b[^>]*class=["'][^"']*(?:giftcard|store_credit)__logosize[^"']*["'][^>]*>)/i;
+    if (cellRe.test(out)) {
+      out = out.replace(cellRe, (m) => `${m}\n${band(headerHtml)}`);
+    } else if (imgRe.test(out)) {
+      out = out.replace(imgRe, (m) => `${m}\n${band(headerHtml)}`);
+    } else {
+      out = out.replace(/(<body[^>]*>)/i, (_m, open) => `${open}\n${band(headerHtml)}`);
+    }
   }
   if (footerHtml.trim()) {
     out = out.replace(/(<\/body>)/i, `${band(footerHtml)}\n$1`);
