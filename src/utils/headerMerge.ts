@@ -55,12 +55,15 @@ export function injectHeaderFooter(
 ): string {
   let out = rawHtml;
   if (headerHtml.trim()) {
-    // Place the custom header band right after the logo cell (shop-name__cell /
-    // giftcard logo img), so it sits directly under the brand logo. Fall back to
-    // top-of-body if neither anchor is present.
+    // Place the custom header band after the whole header block (logo + order
+    // number), i.e. just before the first content table. Fall back to after the
+    // logo cell, then to top-of-body.
+    const contentRe = /(<table[^>]*class=["'][^"']*row content[^"']*["'][^>]*>)/i;
     const cellRe = /(<td[^>]*class=["'][^"']*shop-name__cell[^"']*["'][^>]*>[\s\S]*?<\/td>)/i;
     const imgRe = /(<img\b[^>]*class=["'][^"']*(?:giftcard|store_credit)__logosize[^"']*["'][^>]*>)/i;
-    if (cellRe.test(out)) {
+    if (contentRe.test(out)) {
+      out = out.replace(contentRe, (m) => `${band(headerHtml)}\n${m}`);
+    } else if (cellRe.test(out)) {
       out = out.replace(cellRe, (m) => `${m}\n${band(headerHtml)}`);
     } else if (imgRe.test(out)) {
       out = out.replace(imgRe, (m) => `${m}\n${band(headerHtml)}`);
