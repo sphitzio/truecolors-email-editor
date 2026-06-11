@@ -109,30 +109,40 @@ a { color: #1990c6; }
   border-collapse: separate !important;
 }
 
+/* Button palette (preview): primary #FF8000, secondary #840031,
+   tertiary #5B6000. Labels forced white. !important overrides the inline
+   {{ shop.email_accent_color }} rules baked into each template. */
 .button__cell {
   border-radius: 4px;
   text-align: center;
-  background-color: #1990c6;
+  background-color: #840031 !important; /* plain cell = secondary */
+}
+
+.button__cell--primary,
+.actions-buttons .button__cell--primary {
+  background-color: #FF8000 !important; /* primary */
+}
+
+.button__cell--secondary,
+.button--secondary .button__cell,
+.button__cell--tertiary,
+.button--tertiary .button__cell {
+  background-color: #5B6000 !important; /* tertiary */
 }
 
 .button__cell a,
 .button__text {
   display: block;
-  color: #ffffff;
+  color: #ffffff !important;
   font-size: 15px;
   font-weight: 600;
-  text-decoration: none;
+  text-decoration: none !important;
   padding: 14px 25px;
   border-radius: 4px;
 }
 
-.button--secondary .button__cell {
-  background-color: #ffffff;
-  border: 1px solid #d4d4d4;
-}
-
-.button--secondary .button__cell a,
-.button--secondary .button__text { color: #51545e; }
+/* Shop Pay button keeps its brand purple. */
+.button__cell--shop { background-color: #5a31f4 !important; }
 
 .actions-buttons { width: 100%; }
 

@@ -3,7 +3,7 @@ import { TemplateMeta, BrandState } from './types';
 import PreviewFrame from './components/PreviewFrame';
 import VariableGuide from './components/VariableGuide';
 import { renderTemplatePreview } from './utils/liquidPreview';
-import { mergeBrandHeader, injectHeaderFooter, imageSnippet } from './utils/headerMerge';
+import { mergeBrandHeader, injectHeaderFooter, applyButtonColors, imageSnippet } from './utils/headerMerge';
 import {
   Settings,
   ImagePlus,
@@ -51,7 +51,9 @@ export default function App() {
   // Build the editable HTML from the original: brand logo + header/footer bands.
   const buildEdited = useCallback(
     (html: string) =>
-      injectHeaderFooter(mergeBrandHeader(html, brand), headerHtml, footerHtml),
+      applyButtonColors(
+        injectHeaderFooter(mergeBrandHeader(html, brand), headerHtml, footerHtml),
+      ),
     [brand, headerHtml, footerHtml],
   );
 

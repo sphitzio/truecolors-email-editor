@@ -74,6 +74,35 @@ export function injectHeaderFooter(
   return out;
 }
 
+// Button color overrides baked into the EXPORTED template so real sent emails
+// use the TrueColors palette regardless of the Shopify accent-color setting.
+const BUTTON_COLOR_STYLE = `
+  <style>
+    /* TrueColors button palette */
+    .button__cell { background-color: #840031 !important; }           /* secondary */
+    .button__cell--primary,
+    .actions-buttons .button__cell--primary { background-color: #FF8000 !important; } /* primary */
+    .button__cell--secondary,
+    .button--secondary .button__cell,
+    .button__cell--tertiary,
+    .button--tertiary .button__cell { background-color: #5B6000 !important; }         /* tertiary */
+    .button__cell--shop { background-color: #5a31f4 !important; }      /* Shop Pay */
+    .button__cell a, .button__text { color: #ffffff !important; text-decoration: none !important; }
+  </style>`;
+
+/**
+ * Inject the button-color override stylesheet just before </head> so it wins
+ * over the template's inline {{ shop.email_accent_color }} rules. Idempotent.
+ */
+export function applyButtonColors(rawHtml: string): string {
+  if (rawHtml.includes('TrueColors button palette')) return rawHtml;
+  if (/<\/head>/i.test(rawHtml)) {
+    return rawHtml.replace(/<\/head>/i, `${BUTTON_COLOR_STYLE}\n</head>`);
+  }
+  // No <head> (some templates start with Liquid): prepend the style block.
+  return `${BUTTON_COLOR_STYLE}\n${rawHtml}`;
+}
+
 /**
  * Snippet inserted by the "Insert image" control at the cursor in the raw editor.
  */
