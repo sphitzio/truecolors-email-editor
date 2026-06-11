@@ -1,0 +1,222 @@
+[
+  {
+    "id": "b2b-access-email",
+    "name": "B2B Access Email",
+    "file": "B2B Access Email.html"
+  },
+  {
+    "id": "b2b-location-update-payment-method",
+    "name": "B2B Location Update Payment Method",
+    "file": "B2B Location Update Payment Method.html"
+  },
+  {
+    "id": "contact-customer",
+    "name": "Contact Customer",
+    "file": "Contact Customer.html"
+  },
+  {
+    "id": "customer-account-invite",
+    "name": "Customer Account Invite",
+    "file": "Customer Account Invite.html"
+  },
+  {
+    "id": "customer-account-password-reset",
+    "name": "Customer Account Password Reset",
+    "file": "Customer Account Password Reset.html"
+  },
+  {
+    "id": "customer-account-welcome",
+    "name": "Customer Account Welcome",
+    "file": "Customer Account Welcome.html"
+  },
+  {
+    "id": "customer-email-address-change-confirmation",
+    "name": "Customer Email Address Change Confirmation",
+    "file": "Customer Email Address Change Confirmation.html"
+  },
+  {
+    "id": "customer-marketing-confirmation",
+    "name": "Customer Marketing Confirmation",
+    "file": "Customer Marketing Confirmation.html"
+  },
+  {
+    "id": "customer-payment-method-add-request",
+    "name": "Customer Payment Method Add Request",
+    "file": "Customer Payment Method Add Request.html"
+  },
+  {
+    "id": "customer-payment-method-restore-request",
+    "name": "Customer Payment Method Restore Request",
+    "file": "Customer Payment Method Restore Request.html"
+  },
+  {
+    "id": "customer-payment-method-update-request",
+    "name": "Customer Payment Method Update Request",
+    "file": "Customer Payment Method Update Request.html"
+  },
+  {
+    "id": "delivered",
+    "name": "Delivered",
+    "file": "Delivered.html"
+  },
+  {
+    "id": "draft-order-invoice",
+    "name": "Draft Order Invoice",
+    "file": "Draft Order Invoice.html"
+  },
+  {
+    "id": "gift-card-receipt",
+    "name": "Gift Card Receipt",
+    "file": "Gift Card Receipt.html"
+  },
+  {
+    "id": "new-gift-card",
+    "name": "New Gift Card",
+    "file": "New Gift Card.html"
+  },
+  {
+    "id": "order-canceled",
+    "name": "Order Canceled",
+    "file": "Order Canceled.html"
+  },
+  {
+    "id": "order-confirmation",
+    "name": "Order Confirmation",
+    "file": "Order Confirmation.html"
+  },
+  {
+    "id": "order-edited",
+    "name": "Order Edited",
+    "file": "Order Edited.html"
+  },
+  {
+    "id": "order-invoice",
+    "name": "Order Invoice",
+    "file": "Order Invoice.html"
+  },
+  {
+    "id": "order-link",
+    "name": "Order Link",
+    "file": "Order Link.html"
+  },
+  {
+    "id": "order-locally-delivered",
+    "name": "Order Locally Delivered",
+    "file": "Order Locally Delivered.html"
+  },
+  {
+    "id": "order-missed-local-delivery",
+    "name": "Order Missed Local Delivery",
+    "file": "Order Missed Local Delivery.html"
+  },
+  {
+    "id": "order-out-for-local-delivery",
+    "name": "Order Out For Local Delivery",
+    "file": "Order Out For Local Delivery.html"
+  },
+  {
+    "id": "order-payment-receipt",
+    "name": "Order Payment Receipt",
+    "file": "Order Payment Receipt.html"
+  },
+  {
+    "id": "order-refund",
+    "name": "Order Refund",
+    "file": "Order Refund.html"
+  },
+  {
+    "id": "order-level-return-label-created",
+    "name": "Order-level Return Label Created",
+    "file": "Order-level Return Label Created.html"
+  },
+  {
+    "id": "out-for-delivery",
+    "name": "Out For Delivery",
+    "file": "Out For Delivery.html"
+  },
+  {
+    "id": "pos-abandoned-checkout",
+    "name": "POS Abandoned Checkout",
+    "file": "POS Abandoned Checkout.html"
+  },
+  {
+    "id": "pos-and-mobile-receipt",
+    "name": "POS And Mobile Receipt",
+    "file": "POS And Mobile Receipt.html"
+  },
+  {
+    "id": "pos-email-to-customer",
+    "name": "POS Email To Customer",
+    "file": "POS Email To Customer.html"
+  },
+  {
+    "id": "pos-exchange-receipt",
+    "name": "POS Exchange Receipt",
+    "file": "POS Exchange Receipt.html"
+  },
+  {
+    "id": "payment-error",
+    "name": "Payment Error",
+    "file": "Payment Error.html"
+  },
+  {
+    "id": "payment-reminder",
+    "name": "Payment Reminder",
+    "file": "Payment Reminder.html"
+  },
+  {
+    "id": "pending-payment-error",
+    "name": "Pending Payment Error",
+    "file": "Pending Payment Error.html"
+  },
+  {
+    "id": "pending-payment-success",
+    "name": "Pending Payment Success",
+    "file": "Pending Payment Success.html"
+  },
+  {
+    "id": "picked-up-by-customer",
+    "name": "Picked Up By Customer",
+    "file": "Picked Up By Customer.html"
+  },
+  {
+    "id": "ready-for-local-pickup",
+    "name": "Ready For Local Pickup",
+    "file": "Ready For Local Pickup.html"
+  },
+  {
+    "id": "return-created",
+    "name": "Return Created",
+    "file": "Return Created.html"
+  },
+  {
+    "id": "return-request-approved",
+    "name": "Return Request Approved",
+    "file": "Return Request Approved.html"
+  },
+  {
+    "id": "return-request-declined",
+    "name": "Return Request Declined",
+    "file": "Return Request Declined.html"
+  },
+  {
+    "id": "return-request-received",
+    "name": "Return Request Received",
+    "file": "Return Request Received.html"
+  },
+  {
+    "id": "shipping-confirmation",
+    "name": "Shipping Confirmation",
+    "file": "Shipping Confirmation.html"
+  },
+  {
+    "id": "shipping-update",
+    "name": "Shipping Update",
+    "file": "Shipping Update.html"
+  },
+  {
+    "id": "store-credit-issued",
+    "name": "Store Credit Issued",
+    "file": "Store Credit Issued.html"
+  }
+]

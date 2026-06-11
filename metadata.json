@@ -1,0 +1,6 @@
+{
+  "name": "Shopify Email Template Generator",
+  "description": "An interactive, mobile-optimized Shopify email template editor featuring customizable Liquid dynamic customer data injection, responsive live device previews, presets, and pristine ready-to-use HTML code export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
